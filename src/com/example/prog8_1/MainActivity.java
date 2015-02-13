@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 public class MainActivity extends Activity implements Runnable{
 	ProgressDialog mProgressDialog;
 	MyAsyncHttpClient myAsyncHttpClient;
+
+	WebView webview;
 
 	static String s = "";
 
@@ -45,7 +48,7 @@ public class MainActivity extends Activity implements Runnable{
 
 		case R.id.item01:
 			Random r = new Random();
-			int n = r.nextInt(3000000);
+			int n = r.nextInt(50000);
 			s =(String.valueOf(n));
 
 			Intent selectIntent = new Intent(MainActivity.this, CameraActivity.class);
@@ -54,10 +57,20 @@ public class MainActivity extends Activity implements Runnable{
 
 		case R.id.item02:
 			myAsyncHttpClient.newRequestParams();
-			myAsyncHttpClient.setParams("name",s);
+			myAsyncHttpClient.setParams("name","名前");
 			myAsyncHttpClient.setParams("power",s);
-			myAsyncHttpClient.setParams("photo",s);
+			//myAsyncHttpClient.setParams("img_file_name",s);
+			myAsyncHttpClient.setParams("img_file_name","画像");
 			myAsyncHttpClient.access();
+
+			webview =(WebView)this.findViewById(R.id.webView1);
+			//webview.setWebViewClient(new WebViewClient());
+			webview.setVisibility(webview.VISIBLE);
+			webview.loadUrl("http:j12004.sangi01.net/cake2/powers");
+		break;
+
+		case R.id.item03:
+			webview.setVisibility(webview.INVISIBLE);
 		break;
 
 		}

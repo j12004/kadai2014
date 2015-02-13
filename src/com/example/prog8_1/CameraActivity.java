@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -19,9 +18,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -32,7 +28,7 @@ import android.view.ViewGroup.LayoutParams;
 /**
  * カメラプレビューを表示する {@link Activity} です。
  */
-public class CameraActivity extends Activity implements Runnable{
+public class CameraActivity extends Activity{
 
 	ProgressDialog mProgressDialog;
 	MyAsyncHttpClient myAsyncHttpClient;
@@ -123,18 +119,6 @@ public class CameraActivity extends Activity implements Runnable{
     };
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		super.onCreateOptionsMenu(menu);
-		myAsyncHttpClient = new MyAsyncHttpClient(getApplicationContext());
-		MenuInflater mi = getMenuInflater();
-		mi.inflate(R.menu.option_menu2, menu);
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		SurfaceHolder holder = mView.getHolder();
@@ -192,39 +176,6 @@ public class CameraActivity extends Activity implements Runnable{
 			mCameraOverlayView.setFaces(faces);
 		}
 	};
-
-	public boolean onOptionsItemSelected(int featureId, MenuItem item) {
-		super.onMenuItemSelected(featureId, item);
-
-		switch(item.getItemId()){
-			case R.id.item01:
-				AlertDialog.Builder dlg;
-				dlg = new AlertDialog.Builder(this);
-				dlg.setTitle("メッセージ");
-				dlg.setMessage("アラートダイアログ");
-				dlg.show();
-				break;
-
-			case R.id.item02:
-				//キャプチャ
-				break;
-		}
-		return true;
-	}
-
-	public void run() {
-		try{
-			mProgressDialog.setMax(5);
-			for(int i=1; i<=5; i++){
-				mProgressDialog.setProgress(i);
-				Thread.sleep(1*1000);
-			}
-		}catch(InterruptedException e){
-			e.printStackTrace();
-		}
-		mProgressDialog.dismiss();
-		// TODO 自動生成されたメソッド・スタブ
-	}
 
 	private void registAndroidDB(String path) {
         // アンドロイドのデータベースへ登録
